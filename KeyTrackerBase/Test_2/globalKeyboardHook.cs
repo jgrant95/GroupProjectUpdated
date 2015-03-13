@@ -39,6 +39,7 @@ namespace KeyTrackerBase
         //Record the keys in different ways, using different events available
         //Occurs when one of the hooked keys is pressed
         public event KeyEventHandler KeyDown;
+        public event KeyEventHandler KeyUp;
         //key up would also go here if required
         #endregion
 
@@ -86,6 +87,7 @@ namespace KeyTrackerBase
                     if ((wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) && (KeyDown != null))
                     {
                         KeyDown(this, kea);
+                        KeyUp(this, kea);
                     }
                     if (kea.Handled)
                         return 1;
