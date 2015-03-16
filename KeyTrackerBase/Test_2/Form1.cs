@@ -19,8 +19,12 @@ namespace KeyTrackerBase
 
         //string word = "cunt";
         string sentence;
+        string badWords;
+        string level;
+        string[] words = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\words.txt");
         int countWord = 0;
         int countChar = 0;
+        int countDetect = 0;
 
         public Form1()
         {
@@ -84,6 +88,8 @@ namespace KeyTrackerBase
             }
             #endregion
 
+            
+
             //MIGHT BE WORTH ADDING A VARYING TIMER TO RECORD TEXT IN THE PAST _ MINUTES
             #region New Key Logger (Main) - User
 
@@ -91,42 +97,76 @@ namespace KeyTrackerBase
             {
                 sentence += ((char)e.KeyValue).ToString().ToLower();
                 textBox1.Text = sentence;
-                if (sentence != "\r")
-                {
-                    if (sentence != "¾")
+
+                #region Word Checker
+
+                    ////hierarchy level of words
+                    //switch (level)
+                    //{
+                    //    case "low":
+
+                    //        break;
+                    //    case "medium":
+
+                    //        break;
+                    //    case "High":
+
+                    //        break;
+                    //    default:
+
+                    //        break;
+                    //}
+
+                #endregion
+                    if (sentence != "\r")
                     {
-                        if (countWord == 30 || countChar == 180 || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.Return)
+                        if (sentence != "¾")
                         {
-                            if (sentence != "")
+                            if (countWord == 30 || countChar == 180 || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.Return)
                             {
-                                using (StreamWriter file = new StreamWriter(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
+                                if (sentence != "")
                                 {
-                                    if (e.KeyCode != Keys.OemPeriod)
+                                    using (StreamWriter file = new StreamWriter(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
                                     {
-                                        //writes entries to txt file - logger
-                                        file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
+                                        if (e.KeyCode != Keys.OemPeriod)
+                                        {
+                                            //writes entries to txt file - logger
+                                            file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
+                                            //word detection - NOT WORKING
+                                            for (int i = 0; sentence.Contains(words[i]) && i > 30; i++ )
+                                            {
+                                                countDetect++;
+                                                badWords += words[i] + " ";
+                                            }
+                                            file.WriteLine("Amount of Words Detected: " + countDetect + " - Words: " + badWords);
+                                        }
+                                        else
+                                            //writes entries to txt file, removes period symbol and puts fullstop - logger
+                                            file.WriteLine(DateTime.Now.ToString() + ":  " + sentence.Remove(sentence.Length - 1) + ".");
+
+                                        //string and ints reset
+                                        sentence = "";
+                                        countWord = 0;
+                                        countChar = 0;
+                                        countDetect = 0;
+                                        badWords = "";
+                                        file.Close();
                                     }
-                                    else
-                                        //writes entries to txt file, removes period symbol and puts fullstop - logger
-                                        file.WriteLine(DateTime.Now.ToString() + ":  " + sentence.Remove(sentence.Length - 1) + ".");
-                                    
-                                    //string and ints reset
-                                    sentence = "";
-                                    countWord = 0;
-                                    countChar = 0;
-                                    file.Close();
                                 }
                             }
                         }
+                        else
+                            sentence = "";
                     }
                     else
                         sentence = "";
-                }
-                else
-                    sentence = "";
             }
 
             #endregion
+
+            
+
+            
 
         }
 
