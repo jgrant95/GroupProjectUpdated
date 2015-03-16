@@ -84,50 +84,8 @@ namespace KeyTrackerBase
             }
             #endregion
 
-            #region Key Entry Logger (Main)
-            //ensures backspace isnt entered into string
-            //if (e.KeyCode != Keys.Back)
-            //{
-            //    sentence += ((char)e.KeyValue).ToString().ToLower();
-            //    textBox1.Text = sentence;
-            //    //ends sentence and logs when word count hits 30, character count hits 180, full stop is entered or the return key is entered
-            //    if (countWord == 30 || countChar == 180 || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.Return)
-            //        {//asks, is string not empty? & is the string not have \r (what the return key produces)
-            //            if (sentence != "" && sentence != "\r")
-            //            {
-            //                using (StreamWriter file = new StreamWriter(@"C:\\Users\\computing\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
-            //                {
-            //                    //writes entries to txt file - logger
-            //                    file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
-            //                    //string and ints reset
-            //                    sentence = "";
-            //                    countWord = 0;
-            //                    countChar = 0;
-            //                    file.Close();
-            //                }
-                            
-            //            }
-            //            else
-            //                //ensures the 'returns' arent kept in txt file
-            //                sentence = "";
-
-
-
-
-
-            //        //StreamReader file = new StreamReader("C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt");
-            //        //while((word = file.ReadLine()) != null)
-            //        //{
-            //        //    if (textBox1.Text == word)
-            //        //        MessageBox.Show("CUNT ALERT!");
-            //        //}
-            //        //countWord++;
-            //        //file.Close();
-            //    }
-            //}
-            #endregion
-
-            #region Try 2
+            //MIGHT BE WORTH ADDING A VARYING TIMER TO RECORD TEXT IN THE PAST _ MINUTES
+            #region New Key Logger (Main) - User
 
             if (e.KeyCode != Keys.Back)
             {
@@ -141,10 +99,17 @@ namespace KeyTrackerBase
                         {
                             if (sentence != "")
                             {
-                                using (StreamWriter file = new StreamWriter(@"C:\\Users\\computing\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
+                                using (StreamWriter file = new StreamWriter(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
                                 {
-                                    //writes entries to txt file - logger
-                                    file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
+                                    if (e.KeyCode != Keys.OemPeriod)
+                                    {
+                                        //writes entries to txt file - logger
+                                        file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
+                                    }
+                                    else
+                                        //writes entries to txt file, removes period symbol and puts fullstop - logger
+                                        file.WriteLine(DateTime.Now.ToString() + ":  " + sentence.Remove(sentence.Length - 1) + ".");
+                                    
                                     //string and ints reset
                                     sentence = "";
                                     countWord = 0;
