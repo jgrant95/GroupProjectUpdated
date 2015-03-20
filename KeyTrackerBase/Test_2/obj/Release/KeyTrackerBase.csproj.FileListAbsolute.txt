@@ -9,3 +9,9 @@ C:\Users\Jon\Desktop\Tracker Testing\Test_2\Test_2\obj\Release\Test_2.pdb
 C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\bin\Release\Test_2.exe.config
 C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_2.exe
 C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_2.pdb
+C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\bin\Release\Test_2.exe
+C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\bin\Release\Test_2.pdb
+C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.csprojResolveAssemblyReference.cache
+C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.Form1.resources
+C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_2.Properties.Resources.resources
+C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.csproj.GenerateResource.Cache
