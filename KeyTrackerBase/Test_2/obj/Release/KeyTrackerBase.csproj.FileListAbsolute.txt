@@ -15,3 +15,13 @@ C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Rel
 C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.Form1.resources
 C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_2.Properties.Resources.resources
 C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.csproj.GenerateResource.Cache
+C:\Users\Abigail\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\bin\Release\Test_2.exe.config
+C:\Users\Abigail\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_2.exe
+C:\Users\Abigail\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_2.pdb
+C:\Users\Abigail\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\bin\Release\Test_2.exe
+C:\Users\Abigail\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\bin\Release\Test_2.pdb
+C:\Users\Abigail\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.csprojResolveAssemblyReference.cache
+C:\Users\Abigail\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.Form1.resources
+C:\Users\Abigail\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_2.Properties.Resources.resources
+C:\Users\Abigail\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_2.Settings.resources
+C:\Users\Abigail\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.csproj.GenerateResource.Cache
