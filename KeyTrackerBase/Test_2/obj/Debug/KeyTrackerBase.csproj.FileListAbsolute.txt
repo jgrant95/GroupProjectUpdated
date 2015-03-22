@@ -34,3 +34,4 @@ C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\KeyTrac
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\KeyTrackerBase.Form1.resources
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\Test_2.Properties.Resources.resources
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\KeyTrackerBase.csproj.GenerateResource.Cache
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Debug\Test_2.Settings.resources
