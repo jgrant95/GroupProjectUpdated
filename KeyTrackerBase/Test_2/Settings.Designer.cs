@@ -44,6 +44,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -174,7 +176,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 282);
+            this.label8.Location = new System.Drawing.Point(12, 285);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(66, 17);
             this.label8.TabIndex = 12;
@@ -187,16 +189,40 @@
             "Home",
             "School ",
             "Public Places"});
-            this.comboBox5.Location = new System.Drawing.Point(96, 279);
+            this.comboBox5.Location = new System.Drawing.Point(96, 282);
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(186, 24);
             this.comboBox5.TabIndex = 13;
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Items.AddRange(new object[] {
+            "All",
+            "High (Only)",
+            "Medium/High (Only)",
+            "Low (Only)"});
+            this.comboBox4.Location = new System.Drawing.Point(124, 245);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(186, 24);
+            this.comboBox4.TabIndex = 17;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 248);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(110, 17);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Detection Level:";
             // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(501, 387);
+            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBox5);
@@ -239,5 +265,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.Label label7;
     }
 }

