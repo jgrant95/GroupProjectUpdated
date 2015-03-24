@@ -35,3 +35,4 @@ C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_2.Settings.resources
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.csproj.GenerateResource.Cache
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_2.pdb
+C:\Users\Dave\Documents\GitHub\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\Test_2.Settings.resources
