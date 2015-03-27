@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.adminEmail = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.onOff = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.format = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -43,9 +43,10 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.location = new System.Windows.Forms.ComboBox();
+            this.level = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -57,12 +58,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Admin Email:";
             // 
-            // textBox1
+            // adminEmail
             // 
-            this.textBox1.Location = new System.Drawing.Point(107, 23);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(343, 22);
-            this.textBox1.TabIndex = 1;
+            this.adminEmail.Location = new System.Drawing.Point(107, 23);
+            this.adminEmail.Name = "adminEmail";
+            this.adminEmail.Size = new System.Drawing.Size(343, 22);
+            this.adminEmail.TabIndex = 1;
             // 
             // label2
             // 
@@ -81,16 +82,16 @@
             this.comboBox1.Size = new System.Drawing.Size(121, 24);
             this.comboBox1.TabIndex = 3;
             // 
-            // comboBox2
+            // onOff
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.onOff.FormattingEnabled = true;
+            this.onOff.Items.AddRange(new object[] {
             "On",
             "Off"});
-            this.comboBox2.Location = new System.Drawing.Point(107, 71);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(203, 24);
-            this.comboBox2.TabIndex = 4;
+            this.onOff.Location = new System.Drawing.Point(107, 71);
+            this.onOff.Name = "onOff";
+            this.onOff.Size = new System.Drawing.Size(203, 24);
+            this.onOff.TabIndex = 4;
             // 
             // label3
             // 
@@ -101,17 +102,17 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Email Picture Format:";
             // 
-            // comboBox3
+            // format
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
+            this.format.FormattingEnabled = true;
+            this.format.Items.AddRange(new object[] {
             "JPEG",
             "GIF",
             "PNG"});
-            this.comboBox3.Location = new System.Drawing.Point(160, 119);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(190, 24);
-            this.comboBox3.TabIndex = 6;
+            this.format.Location = new System.Drawing.Point(160, 119);
+            this.format.Name = "format";
+            this.format.Size = new System.Drawing.Size(190, 24);
+            this.format.TabIndex = 6;
             // 
             // label4
             // 
@@ -172,6 +173,7 @@
             this.button2.TabIndex = 15;
             this.button2.Text = "Set";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label8
             // 
@@ -182,30 +184,29 @@
             this.label8.TabIndex = 12;
             this.label8.Text = "Location:";
             // 
-            // comboBox5
+            // location
             // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Items.AddRange(new object[] {
+            this.location.FormattingEnabled = true;
+            this.location.Items.AddRange(new object[] {
             "Home",
             "School ",
             "Public Places"});
-            this.comboBox5.Location = new System.Drawing.Point(96, 282);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(186, 24);
-            this.comboBox5.TabIndex = 13;
+            this.location.Location = new System.Drawing.Point(96, 282);
+            this.location.Name = "location";
+            this.location.Size = new System.Drawing.Size(186, 24);
+            this.location.TabIndex = 13;
             // 
-            // comboBox4
+            // level
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
-            "All",
-            "High (Only)",
-            "Medium/High (Only)",
-            "Low (Only)"});
-            this.comboBox4.Location = new System.Drawing.Point(124, 245);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(186, 24);
-            this.comboBox4.TabIndex = 17;
+            this.level.FormattingEnabled = true;
+            this.level.Items.AddRange(new object[] {
+            "All (Recommended)",
+            "High/Medium",
+            "Medium/Low"});
+            this.level.Location = new System.Drawing.Point(124, 245);
+            this.level.Name = "level";
+            this.level.Size = new System.Drawing.Size(186, 24);
+            this.level.TabIndex = 17;
             // 
             // label7
             // 
@@ -216,28 +217,40 @@
             this.label7.TabIndex = 16;
             this.label7.Text = "Detection Level:";
             // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold);
+            this.button3.Location = new System.Drawing.Point(12, 316);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(380, 59);
+            this.button3.TabIndex = 18;
+            this.button3.Text = "Save and Restart";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(501, 387);
-            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.level);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.comboBox5);
+            this.Controls.Add(this.location);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.format);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.onOff);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.adminEmail);
             this.Controls.Add(this.label1);
             this.Name = "Settings";
             this.Text = "Settings";
@@ -250,12 +263,12 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox adminEmail;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox onOff;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox format;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label5;
@@ -264,8 +277,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox location;
+        private System.Windows.Forms.ComboBox level;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button3;
     }
 }

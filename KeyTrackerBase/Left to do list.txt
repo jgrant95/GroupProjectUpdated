@@ -1,0 +1,20 @@
+password
+protect txt file - hide file add password through program - maybe add encryption
+time/date on email
+tags
+auto detect txt locations
+installation window!
+
+
+
+
+
+
+-----
+All (Recommended - Detects all words in system)
+High/Medium (Does not detect 'Low' level words)
+Medium/Low (Does not detect 'High' level words)
+-----
+All (Recommended)
+High/Medium
+Medium/Low

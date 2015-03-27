@@ -1,6 +1,6 @@
 cyberbullyingauthority@gmail.com
-on
-.JPEG
-helloWorld
-low
+Off
+JPEG
+helloworld
+All (Recommended)
 School
