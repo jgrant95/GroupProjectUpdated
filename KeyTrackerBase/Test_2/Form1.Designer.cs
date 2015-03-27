@@ -64,7 +64,6 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Key Tracker";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPressMod);
             this.ResumeLayout(false);
             this.PerformLayout();
