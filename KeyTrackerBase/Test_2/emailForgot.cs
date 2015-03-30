@@ -14,7 +14,7 @@ namespace KeyTrackerBase
 {
     public partial class emailForgot : Form
     {
-        string[] settingsLoad = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\settings.txt");
+        string[] settingsLoad = File.ReadAllLines(Path.GetDirectoryName(Application.ExecutablePath) + "\\settings.txt");
 
         public emailForgot()
         {

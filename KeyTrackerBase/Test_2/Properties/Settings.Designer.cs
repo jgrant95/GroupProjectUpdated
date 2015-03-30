@@ -22,5 +22,17 @@ namespace KeyTrackerBase.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsFirstTime {
+            get {
+                return ((bool)(this["IsFirstTime"]));
+            }
+            set {
+                this["IsFirstTime"] = value;
+            }
+        }
     }
 }

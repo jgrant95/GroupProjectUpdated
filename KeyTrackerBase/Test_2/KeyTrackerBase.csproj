@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="createPass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="createPass.Designer.cs">
+      <DependentUpon>createPass.cs</DependentUpon>
+    </Compile>
     <Compile Include="emailForgot.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,10 @@
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings1.cs" />
+    <EmbeddedResource Include="createPass.resx">
+      <DependentUpon>createPass.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="emailForgot.resx">
       <DependentUpon>emailForgot.cs</DependentUpon>
     </EmbeddedResource>

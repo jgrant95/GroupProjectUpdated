@@ -1,4 +1,3 @@
-password
 protect txt file - hide file add password through program - maybe add encryption
 time/date on email
 tags

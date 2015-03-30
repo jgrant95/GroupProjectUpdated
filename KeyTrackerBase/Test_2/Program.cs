@@ -16,7 +16,15 @@ namespace KeyTrackerBase
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            //determines whether to run get started form or normal, uses settings function to do so and save this
+            if (Properties.Settings.Default.IsFirstTime == true)
+            {
+                Application.Run(new createPass());
+            }
+            else
+                Application.Run(new Form1());
+
         }
     }
 }

@@ -38,3 +38,4 @@ C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTr
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.pdb
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.Password.resources
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.emailForgot.resources
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.createPass.resources

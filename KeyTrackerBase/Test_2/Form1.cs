@@ -29,10 +29,10 @@ namespace KeyTrackerBase
         //reads .txt files into arrays
        // string[] words;
         string[] words;
-        string[] low = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\low.txt");
-        string[] medium = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\medium.txt");
-        string[] high = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\high.txt");
-        string[] settings = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\settings.txt");
+        string[] low = File.ReadAllLines(Path.GetDirectoryName(Application.ExecutablePath) + "\\low.txt");
+        string[] medium = File.ReadAllLines(Path.GetDirectoryName(Application.ExecutablePath) + "\\medium.txt");
+        string[] high = File.ReadAllLines(Path.GetDirectoryName(Application.ExecutablePath) + "\\high.txt");
+        string[] settings = File.ReadAllLines(Path.GetDirectoryName(Application.ExecutablePath) + "\\settings.txt");
 
         //create icon 
         NotifyIcon systemTrayIcon;
@@ -40,6 +40,9 @@ namespace KeyTrackerBase
 
         public Form1()
         {
+            ////revert to default - get started
+            //Properties.Settings.Default.IsFirstTime = true;
+            //Properties.Settings.Default.Save();
 
             #region Form & System Tray
             //hide form
@@ -50,11 +53,11 @@ namespace KeyTrackerBase
             switch (settings[1])
             {
                 case "On":
-                    applicationIcon = new Icon("C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\f_Owl_Icon.ico");
+                    applicationIcon = new Icon(Path.GetDirectoryName(Application.ExecutablePath) + "\\f_Owl_Icon.ico");
                     systemTray("Quit", "AntiBullying Prototype v0.4", "Settings");
                     break;
                 case "Off":
-                    applicationIcon = new Icon("C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\f_Owl_Icon_off.ico");
+                    applicationIcon = new Icon(Path.GetDirectoryName(Application.ExecutablePath) + "\\f_Owl_Icon_off.ico");
                     systemTray("Quit", "AntiBullying Prototype v0.4 - Disabled", "Settings");
                     break;
                 default:
@@ -200,7 +203,7 @@ namespace KeyTrackerBase
                                                 if (sentence != "" || e.Shift != true)
                                                 {
                                                     //loads the log file to write into
-                                                    using (StreamWriter file = new StreamWriter(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\log.txt", true))
+                                                    using (StreamWriter file = new StreamWriter(Path.GetDirectoryName(Application.ExecutablePath) + "\\log.txt", true))
                                                     {
 
                                                         if (e.KeyCode != Keys.OemPeriod)
@@ -292,15 +295,15 @@ namespace KeyTrackerBase
                 {
                     case "JPEG":
                         graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
-                        screencapture.Save(@"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        screencapture.Save(Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + iScreen + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
                         break;
                     case "PNG":
                         graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
-                        screencapture.Save(@"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                        screencapture.Save(Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + iScreen + ".png", System.Drawing.Imaging.ImageFormat.Png);
                         break;
                     case "GIF":
                         graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
-                        screencapture.Save(@"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + ".gif", System.Drawing.Imaging.ImageFormat.Gif);
+                        screencapture.Save(Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + iScreen + ".gif", System.Drawing.Imaging.ImageFormat.Gif);
                         break;
                     default:
                         break;
@@ -351,7 +354,7 @@ namespace KeyTrackerBase
             }
             catch (Exception Ex)
             {
-                //message = null;
+                MessageBox.Show("Error Email");
                 throw Ex;
             }
         }

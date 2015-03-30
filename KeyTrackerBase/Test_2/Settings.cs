@@ -15,7 +15,7 @@ namespace Test_2
     public partial class Settings : Form
     {
         string final;
-        string[] settingsLoad = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\settings.txt");
+        string[] settingsLoad = File.ReadAllLines(Path.GetDirectoryName(Application.ExecutablePath) + "\\settings.txt");
         string[] settingsSave = new string[6];
 
         public Settings()
@@ -33,7 +33,7 @@ namespace Test_2
             location.Text = settingsLoad[5];
         }
 
-        //SET PASSWORD
+        //SET PASSWORD - Key:3
         private void button2_Click(object sender, EventArgs e)
         {
             //decrypts old password stored
@@ -52,8 +52,8 @@ namespace Test_2
                     saveAll(final);
 
                     //Writes array to .txt file
-                    File.WriteAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\settings.txt", settingsSave);
-                    settingsLoad = File.ReadAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\settings.txt");
+                    File.WriteAllLines(Path.GetDirectoryName(Application.ExecutablePath) + "\\settings.txt", settingsSave);
+                    settingsLoad = File.ReadAllLines(Path.GetDirectoryName(Application.ExecutablePath) + "\\settings.txt");
                     MessageBox.Show("Password Has Been Changed!");
                 }
                 else
@@ -95,8 +95,9 @@ namespace Test_2
             saveAll(settingsLoad[3]);
 
             //Writes array to .txt file
-            File.WriteAllLines(@"C:\\Users\\Jon\\Desktop\\GroupProjectUpdated\\KeyTrackerBase\\settings.txt", settingsSave);
+            File.WriteAllLines(Path.GetDirectoryName(Application.ExecutablePath) + "\\settings.txt", settingsSave);
 
+            //restarts
             Application.Exit();
             System.Diagnostics.Process.Start(Application.ExecutablePath);
         }
