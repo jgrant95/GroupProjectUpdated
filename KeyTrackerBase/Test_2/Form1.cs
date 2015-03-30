@@ -11,6 +11,7 @@ using KeyTrackerBase;
 using System.Drawing;
 using System.Net.Mail;//used for emailing
 using Test_2;
+using Ionic.Zip;
 
 //cyberbullying
 
@@ -54,11 +55,11 @@ namespace KeyTrackerBase
             {
                 case "On":
                     applicationIcon = new Icon(Path.GetDirectoryName(Application.ExecutablePath) + "\\f_Owl_Icon.ico");
-                    systemTray("Quit", "AntiBullying Prototype v0.4", "Settings");
+                    systemTray("Quit", "AntiBullying Prototype v0.5", "Settings");
                     break;
                 case "Off":
                     applicationIcon = new Icon(Path.GetDirectoryName(Application.ExecutablePath) + "\\f_Owl_Icon_off.ico");
-                    systemTray("Quit", "AntiBullying Prototype v0.4 - Disabled", "Settings");
+                    systemTray("Quit", "AntiBullying Prototype v0.5 - Disabled", "Settings");
                     break;
                 default:
                     MessageBox.Show("Please contact technical support regarding:\n\nERROR01 - Settings - Invalid switch option");
@@ -140,7 +141,7 @@ namespace KeyTrackerBase
         }
 
         //quits the program
-        void quitMenuItem_Click(object sender, EventArgs e)
+        public void quitMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -156,7 +157,7 @@ namespace KeyTrackerBase
         void gkh_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             //validates if the program is turned on via. settings
-            if (settings[1] == "on")
+            if (settings[1] == "On")
             {
                 RoutedEventArgs f = new RoutedEventArgs();
 
@@ -203,38 +204,38 @@ namespace KeyTrackerBase
                                                 if (sentence != "" || e.Shift != true)
                                                 {
                                                     //loads the log file to write into
-                                                    using (StreamWriter file = new StreamWriter(Path.GetDirectoryName(Application.ExecutablePath) + "\\log.txt", true))
-                                                    {
-
-                                                        if (e.KeyCode != Keys.OemPeriod)
+                                                        using (StreamWriter file = new StreamWriter(Path.GetDirectoryName(Application.ExecutablePath) + "\\log.txt", true))
                                                         {
 
-                                                            //writes entries to txt file - logger
-                                                            file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
-                                                            //calls function to detect for words
-                                                            wordDetector(file);
+                                                            if (e.KeyCode != Keys.OemPeriod)
+                                                            {
 
+                                                                //writes entries to txt file - logger
+                                                                file.WriteLine(DateTime.Now.ToString() + ":  " + sentence);
+                                                                //calls function to detect for words
+                                                                wordDetector(file);
+
+                                                            }
+
+                                                            //FULL STOP (PERIOD) LOGGING
+                                                            else if (e.KeyCode == Keys.OemPeriod)
+                                                            {
+
+                                                                //writes entries to txt file, removes period symbol and puts fullstop - logger
+                                                                file.WriteLine(DateTime.Now.ToString() + ":  " + sentence.Remove(sentence.Length - 1) + ".");
+                                                                wordDetector(file);
+
+                                                            }
+
+                                                            //string and ints reset
+                                                            sentence = "";
+                                                            countWord = 0;
+                                                            countChar = 0;
+                                                            countDetect = 0;
+                                                            badWords = "";
+                                                            file.Close();
                                                         }
-
-                                                        //FULL STOP (PERIOD) LOGGING
-                                                        else if (e.KeyCode == Keys.OemPeriod)
-                                                        {
-
-                                                            //writes entries to txt file, removes period symbol and puts fullstop - logger
-                                                            file.WriteLine(DateTime.Now.ToString() + ":  " + sentence.Remove(sentence.Length - 1) + ".");
-                                                            wordDetector(file);
-
-                                                        }
-
-                                                        //string and ints reset
-                                                        sentence = "";
-                                                        countWord = 0;
-                                                        countChar = 0;
-                                                        countDetect = 0;
-                                                        badWords = "";
-                                                        file.Close();
                                                     }
-                                                }
                                             }
                                         }
                                         else
@@ -289,74 +290,106 @@ namespace KeyTrackerBase
                 //capture screenshot & send email with it and log message
                 //uses chosen format for screenshot
 
-                Bitmap screencapture = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
-                Graphics graphics = Graphics.FromImage(screencapture as Image);
-                switch (settings[2])
-                {
-                    case "JPEG":
-                        graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
-                        screencapture.Save(Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + iScreen + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
-                        break;
-                    case "PNG":
-                        graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
-                        screencapture.Save(Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + iScreen + ".png", System.Drawing.Imaging.ImageFormat.Png);
-                        break;
-                    case "GIF":
-                        graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
-                        screencapture.Save(Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + iScreen + ".gif", System.Drawing.Imaging.ImageFormat.Gif);
-                        break;
-                    default:
-                        break;
+                    Bitmap screencapture = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+                    Graphics graphics = Graphics.FromImage(screencapture as Image);
+                    switch (settings[2])
+                    {
+                        case "JPEG":
+                            graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
+                            screencapture.Save(Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + iScreen + ".jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                            break;
+                        case "PNG":
+                            graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
+                            screencapture.Save(Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + iScreen + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                            break;
+                        case "GIF":
+                            graphics.CopyFromScreen(0, 0, 0, 0, screencapture.Size);
+                            screencapture.Save(Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + iScreen + ".gif", System.Drawing.Imaging.ImageFormat.Gif);
+                            break;
+                        default:
+                            MessageBox.Show("Please contact technical support regarding:\n\nERROR03 - Settings - Invalid screenshot format option");
+                            break;
+                    }
+
+                    #region Delete Screenshots
+                    if (iScreen >= 20)
+                    {
+                        for (int i = 0; i <= iScreen; i++)
+                        {
+                            if (File.Exists(Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + i + "." + settings[2].ToLower()))
+                            {
+                                try
+                                {
+                                    File.Delete(Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + i + "." + settings[2].ToLower());
+                                }
+                                catch (System.IO.IOException e)
+                                {
+                                    MessageBox.Show(e + "\nPlease contact technical support regarding:\n\nERROR06 - SCREENSHOTS - Cannot delete screenshots");
+                                }
+                            }
+                        }
+                        iScreen = -1;
+                    }
+                    #endregion
+
+                    SendEmail(settings[0], "User: " + userName + " " + badWords, "Sentence recorded at " + DateTime.Now.ToString() + ": " + sentence, @"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + settings[2].ToLower());
+                    iScreen++;
+
                 }
-
-                //SendEmail(settings[0], "User: " + userName + " " + badWords, "Sentence: " + sentence, @"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + settings[2].ToLower());
-                iScreen++;
-
-            }
         }
 
-        //EMAIL WORKING PERFECTLY! - ADD TIME AND DATE STAMP
+        //EMAIL WORKING PERFECTLY!
         public static void SendEmail(string to, string subject, string body, string path)
         {
-            try
+            if (to != "")
             {
-                //------------------------------------Email message code-------------------------------
-
-                //creating the email object
-
-                MailMessage message = new MailMessage("screenshotbully@gmail.com", to);
-                //Body or content of the email indicating a new bullying incident 
-                message.Body = body;//example
-                //subject or title of the email
-                message.Subject = (subject);//gets username currently logged in
-                //attachment code of the screenshot, direct acess to file path of the screenshot or it can be replaced by a variable
-                if (path != null)
+                try
                 {
-                    message.Attachments.Add(new Attachment(path));
+                    //------------------------------------Email message code-------------------------------
+
+                    //creating the email object
+
+                    MailMessage message = new MailMessage("screenshotbully@gmail.com", to);
+                    //Body or content of the email indicating a new bullying incident 
+                    message.Body = body;//example
+                    //subject or title of the email
+                    message.Subject = (subject);//gets username currently logged in
+                    //attachment code of the screenshot, direct acess to file path of the screenshot or it can be replaced by a variable
+                    if (path != null)
+                    {
+                        message.Attachments.Add(new Attachment(path));
+                    }
+                    //------------------------------end----------------------------------------------
+
+                    //------------------------------Email client used (gmail)------------------------------
+
+                    //crearting client object with gmail smtp details and port
+                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                    client.ServicePoint.MaxIdleTime = 1;
+                    //login credentials of screenshot sender
+                    client.Credentials = new System.Net.NetworkCredential("screenshotbully@gmail.com", "cyberbullying");
+                    //enabling secure connection
+                    client.EnableSsl = true;
+                    //sending the email message - using 'SendAsync' as it almost completley removes lag
+                    client.SendAsync(message, null);
+
+                    //------------------------------end-----------------------------------------------
+                    //freeing memory
+                    message = null;
                 }
-                //------------------------------end----------------------------------------------
-
-                //------------------------------Email client used (gmail)------------------------------
-
-                //crearting client object with gmail smtp details and port
-                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-                client.ServicePoint.MaxIdleTime = 1;
-                //login credentials of screenshot sender
-                client.Credentials = new System.Net.NetworkCredential("screenshotbully@gmail.com", "cyberbullying");
-                //enabling secure connection
-                client.EnableSsl = true;
-                //sending the email message - using 'SendAsync' as it almost completley removes lag
-                client.SendAsync(message, null);
-
-                //------------------------------end-----------------------------------------------
-                //freeing memory
-                message = null;
+                catch (Exception Ex)
+                {
+                    MessageBox.Show("Error Email");
+                    throw Ex;
+                }
             }
-            catch (Exception Ex)
-            {
-                MessageBox.Show("Error Email");
-                throw Ex;
-            }
+            else
+                MessageBox.Show("Please contact technical support regarding:\n\nERROR05 - Settings - Email address NULL");
+        }
+
+        private void Form1_Closing(object sender, FormClosingEventArgs e)
+        {
+            systemTrayIcon.Visible = false;
         }
 
     }

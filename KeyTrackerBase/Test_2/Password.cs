@@ -25,32 +25,38 @@ namespace KeyTrackerBase
         {
             //decrypts old password stored - uses encryption used in settings form
             string old = Settings.EncryptDecrypt(settingsLoad[3], 3);
-            
-            //ensures textbox isnt empty
-            if (passBox.Text != "")
+         
+            if (old != "")
             {
-                //ensures old password is equal to one stored in txt file
-                if (passBox.Text == old)
+                //ensures textbox isnt empty
+                if (passBox.Text != "")
                 {
-                    this.Close();
-                    Settings settingsForm = new Settings();
-                    settingsForm.Show();
+                    //ensures old password is equal to one stored in txt file
+                    if (passBox.Text == old)
+                    {
+                        this.Close();
+                        Settings settingsForm = new Settings();
+                        settingsForm.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Password Incorrect!");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Password Incorrect!");
+                    MessageBox.Show("Please Enter Password");
                 }
             }
             else
-            {
-                MessageBox.Show("Please Enter Password");
-            }
+                MessageBox.Show("Please contact technical support regarding:\n\nERROR04 - Settings - Password NULL");
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             emailForgot emailForm = new emailForgot();
             emailForm.Show();
+            
         }
 
     }

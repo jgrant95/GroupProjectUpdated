@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using KeyTrackerBase;
 
 namespace Test_2
 {
@@ -17,7 +18,7 @@ namespace Test_2
         string final;
         string[] settingsLoad = File.ReadAllLines(Path.GetDirectoryName(Application.ExecutablePath) + "\\settings.txt");
         string[] settingsSave = new string[6];
-
+        
         public Settings()
         {
             InitializeComponent();
@@ -97,7 +98,7 @@ namespace Test_2
             //Writes array to .txt file
             File.WriteAllLines(Path.GetDirectoryName(Application.ExecutablePath) + "\\settings.txt", settingsSave);
 
-            //restarts
+            //restarts            
             Application.Exit();
             System.Diagnostics.Process.Start(Application.ExecutablePath);
         }

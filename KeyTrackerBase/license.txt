@@ -1,0 +1,10 @@
+-----ANTI-BULLYING SOFTWARE-----
+-----By Group Project CS12------
+
+User License Agreement would go here
+
+-Users must be aware of the logging
+-Users must be aware of screenshotting
+-Users must be aware of word tracking
+
+--------End of Agreement--------

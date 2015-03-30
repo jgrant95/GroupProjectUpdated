@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
             this.label1 = new System.Windows.Forms.Label();
             this.adminEmail = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -84,6 +85,7 @@
             // 
             // onOff
             // 
+            this.onOff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.onOff.FormattingEnabled = true;
             this.onOff.Items.AddRange(new object[] {
             "On",
@@ -104,6 +106,7 @@
             // 
             // format
             // 
+            this.format.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.format.FormattingEnabled = true;
             this.format.Items.AddRange(new object[] {
             "JPEG",
@@ -158,7 +161,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(398, 316);
+            this.button1.Location = new System.Drawing.Point(398, 320);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(91, 59);
             this.button1.TabIndex = 14;
@@ -186,6 +189,7 @@
             // 
             // location
             // 
+            this.location.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.location.FormattingEnabled = true;
             this.location.Items.AddRange(new object[] {
             "Home",
@@ -198,6 +202,7 @@
             // 
             // level
             // 
+            this.level.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.level.FormattingEnabled = true;
             this.level.Items.AddRange(new object[] {
             "All (Recommended)",
@@ -220,7 +225,7 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold);
-            this.button3.Location = new System.Drawing.Point(12, 316);
+            this.button3.Location = new System.Drawing.Point(12, 320);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(380, 59);
             this.button3.TabIndex = 18;
@@ -232,7 +237,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(501, 387);
+            this.ClientSize = new System.Drawing.Size(501, 395);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.level);
             this.Controls.Add(this.label7);
@@ -252,6 +257,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.adminEmail);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Settings";
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.Settings_Load);

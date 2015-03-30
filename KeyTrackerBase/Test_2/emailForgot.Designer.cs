@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(emailForgot));
             this.label1 = new System.Windows.Forms.Label();
             this.confirmButton = new System.Windows.Forms.Button();
             this.emailBox = new System.Windows.Forms.TextBox();
@@ -69,6 +70,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.confirmButton);
             this.Controls.Add(this.emailBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "emailForgot";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Forgot Password?";
