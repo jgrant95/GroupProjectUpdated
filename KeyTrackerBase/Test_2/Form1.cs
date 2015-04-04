@@ -45,7 +45,7 @@ namespace KeyTrackerBase
         public Form1()
         {
             //run on startup
-            rkApp.SetValue("KeyTrackerBase", Application.ExecutablePath.ToString());
+            rkApp.SetValue("Anti-Bullying Software", Path.GetDirectoryName(Application.ExecutablePath));
 
             if(settings == null || settings.Length == 0)
             {
