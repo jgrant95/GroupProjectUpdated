@@ -34,9 +34,17 @@ namespace KeyTrackerBase
                     //ensures old password is equal to one stored in txt file
                     if (passBox.Text == old)
                     {
-                        this.Close();
-                        Settings settingsForm = new Settings();
-                        settingsForm.Show();
+                        if (Properties.Settings.Default.passwordDetermine == "settings")
+                        {
+                            Settings settingsForm = new Settings();
+                            this.Close();
+                            settingsForm.Show();
+                        }
+                        else if (Properties.Settings.Default.passwordDetermine == "quit")
+                        {
+                            this.Close();
+                            Application.Exit();
+                        }
                     }
                     else
                     {

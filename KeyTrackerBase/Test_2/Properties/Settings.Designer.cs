@@ -34,5 +34,17 @@ namespace KeyTrackerBase.Properties {
                 this["IsFirstTime"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NULL")]
+        public string passwordDetermine {
+            get {
+                return ((string)(this["passwordDetermine"]));
+            }
+            set {
+                this["passwordDetermine"] = value;
+            }
+        }
     }
 }

