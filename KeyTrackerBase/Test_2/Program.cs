@@ -23,7 +23,15 @@ namespace KeyTrackerBase
                 Application.Run(new createPass());
             }
             else
-                Application.Run(new Form1());
+                try
+                {
+                    Application.Run(new Form1());
+                }
+                catch
+                {
+                    //used for when the app cant run
+                    MessageBox.Show("Application Closed");
+                }
 
         }
     }

@@ -47,11 +47,11 @@ namespace KeyTrackerBase
             //run on startup
             rkApp.SetValue("Anti-Bullying Software", Path.GetDirectoryName(Application.ExecutablePath));
 
-            if(settings == null || settings.Length == 0)
+            if (settings == null || settings.Length == 0)
             {
                 Properties.Settings.Default.IsFirstTime = true;
                 Properties.Settings.Default.Save();
-                MessageBox.Show("Settings Are Empty, Re-Open and Enter in the required details");
+                MessageBox.Show("Settings Are Empty, You need to re-enter your settings");
                 this.Close();
                 Application.Exit();
             }
@@ -66,19 +66,30 @@ namespace KeyTrackerBase
             this.ShowInTaskbar = false;
 
             //Load icon
-            switch (settings[1])
+            if (settings != null)
             {
-                case "On":
-                    applicationIcon = new Icon(Path.GetDirectoryName(Application.ExecutablePath) + "\\f_Owl_Icon.ico");
-                    systemTray("Quit", "AntiBullying Prototype v0.5", "Settings");
-                    break;
-                case "Off":
-                    applicationIcon = new Icon(Path.GetDirectoryName(Application.ExecutablePath) + "\\f_Owl_Icon_off.ico");
-                    systemTray("Quit", "AntiBullying Prototype v0.5 - Disabled", "Settings");
-                    break;
-                default:
-                    MessageBox.Show("Please contact technical support regarding:\n\nERROR01 - Settings - Invalid switch option");
-                    break;
+                if (settings.Length != 0)
+                {
+                    switch (settings[1])
+                    {
+                        case "On":
+                            applicationIcon = new Icon(Path.GetDirectoryName(Application.ExecutablePath) + "\\f_Owl_Icon.ico");
+                            systemTray("Quit", "AntiBullying Prototype v0.5", "Settings");
+                            break;
+                        case "Off":
+                            applicationIcon = new Icon(Path.GetDirectoryName(Application.ExecutablePath) + "\\f_Owl_Icon_off.ico");
+                            systemTray("Quit", "AntiBullying Prototype v0.5 - Disabled", "Settings");
+                            break;
+                        default:
+                            MessageBox.Show("Please contact technical support regarding:\n\nERROR01 - Settings - Invalid switch option");
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                this.Close();
+                Application.Exit();
             }
 
             InitializeComponent();
@@ -96,30 +107,40 @@ namespace KeyTrackerBase
             #region Word Checker - Level
 
             //array to use for combined arrays (for different levels)
-            
 
-            //hierarchy level of words
-            switch (settings[4])
+            if (settings != null)
             {
-                case "All (Recommended)":
-                    words =  new string[low.Length + medium.Length + high.Length];
-                    low.CopyTo(words, 0);//adds a copy of the low array to the beginning of the new array
-                    medium.CopyTo(words, low.Length);//same but at the end of the length of low
-                    high.CopyTo(words, low.Length + medium.Length);//same but end of the length of low and medium
-                    break;
-                case "High/Medium":
-                    words =  new string[low.Length + medium.Length + high.Length];
-                    medium.CopyTo(words, 0);//adds a copy of the low array to the beginning of the new array
-                    high.CopyTo(words, medium.Length);//same but at the end of the length of low
-                    break;
-                case "Medium/Low":
-                    words =  new string[low.Length + medium.Length + high.Length];
-                    medium.CopyTo(words, 0);//adds a copy of the low array to the beginning of the new array
-                    high.CopyTo(words, medium.Length);//same but at the end of the length of low
-                    break;
-                default:
-                    MessageBox.Show("Please contact technical support regarding:\n\nERROR02 - Settings - Invalid level detection option");
-                    break;
+                if (settings.Length != 0)
+                {
+                    //hierarchy level of words
+                    switch (settings[4])
+                    {
+                        case "All (Recommended)":
+                            words = new string[low.Length + medium.Length + high.Length];
+                            low.CopyTo(words, 0);//adds a copy of the low array to the beginning of the new array
+                            medium.CopyTo(words, low.Length);//same but at the end of the length of low
+                            high.CopyTo(words, low.Length + medium.Length);//same but end of the length of low and medium
+                            break;
+                        case "High/Medium":
+                            words = new string[low.Length + medium.Length + high.Length];
+                            medium.CopyTo(words, 0);//adds a copy of the low array to the beginning of the new array
+                            high.CopyTo(words, medium.Length);//same but at the end of the length of low
+                            break;
+                        case "Medium/Low":
+                            words = new string[low.Length + medium.Length + high.Length];
+                            medium.CopyTo(words, 0);//adds a copy of the low array to the beginning of the new array
+                            high.CopyTo(words, medium.Length);//same but at the end of the length of low
+                            break;
+                        default:
+                            MessageBox.Show("Please contact technical support regarding:\n\nERROR02 - Settings - Invalid level detection option");
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                this.Close();
+                Application.Exit();
             }
 
             #endregion
