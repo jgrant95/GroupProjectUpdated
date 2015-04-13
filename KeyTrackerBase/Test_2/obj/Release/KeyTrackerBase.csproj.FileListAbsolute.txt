@@ -40,3 +40,4 @@ C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTr
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.emailForgot.resources
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.createPass.resources
 C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\bin\Release\Ionic.Zip.dll
+C:\Users\Jon\Desktop\GroupProjectUpdated\KeyTrackerBase\Test_2\obj\Release\KeyTrackerBase.Form2.resources

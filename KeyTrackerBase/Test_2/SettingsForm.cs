@@ -113,5 +113,12 @@ namespace Test_2
             settingsSave[4] = level.Text;//detection level
             settingsSave[5] = location.Text;//location
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //displays help
+            Form2 helpForm = new Form2();
+            helpForm.Show();
+        }
     }
 }
